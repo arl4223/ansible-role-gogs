@@ -1,0 +1,61 @@
+APP_NAME = {{ gogs_app_name }} 
+RUN_USER = {{ gogs_user }}
+RUN_MODE = prod
+
+[database]
+DB_TYPE  = sqlite3
+HOST     = 127.0.0.1:3306
+NAME     = {{ gogs_db_name }}
+USER     = root
+PASSWD   =
+SSL_MODE = disable
+PATH     = data/gogs.db
+
+[repository]
+ROOT = {{ gogs_user_home }}/gogs-repositories
+
+[server]
+DOMAIN       = localhost
+HTTP_PORT    = {{ gogs_http_port }}
+ROOT_URL     = {{ gogs_app_url }}
+DISABLE_SSH  = false
+SSH_PORT     = {{ gogs_ssh_port }}
+OFFLINE_MODE = false
+
+[mailer]
+ENABLED = {{ gogs_mailer_enabled }}
+DISABLE_HELO = {{ gogs_mailer_disable_helo }}
+HELO_HOSTNAME = {{ gogs_mailer_helo_hostname }} 
+HOST = {{ gogs_mailer_host }}
+FROM = {{ gogs_mailer_from }}
+USER = {{ gogs_mailer_user }}
+PASSWD = {{ gogs_mailer_password }}
+SKIP_VERIFY = {{ gogs_mailer_skip_verify }}
+
+
+[service]
+REGISTER_EMAIL_CONFIRM = {{ gogs_register_email_confirm }} 
+ENABLE_NOTIFY_MAIL     = {{ gogs_enable_notify_mail }}
+DISABLE_REGISTRATION   = {{ gogs_disable_registration }}
+ENABLE_CAPTCHA         = {{ gogs_enable_captcha }}
+REQUIRE_SIGNIN_VIEW    = {{ gogs_require_signin_view }}
+
+[picture]
+DISABLE_GRAVATAR        = false
+ENABLE_FEDERATED_AVATAR = false
+
+[session]
+PROVIDER = file
+
+[log]
+MODE      = file
+LEVEL     = Info
+ROOT_PATH = /home/git/gogs/log
+
+[security]
+INSTALL_LOCK = true
+SECRET_KEY   = sgvQE7KFg9xGX01
+
+[other]
+SHOW_FOOTER_BRANDING = {{ gogs_show_footer_branding }}
+SHOW_FOOTER_VERSION = {{ gogs_show_footer_version }}

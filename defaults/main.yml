@@ -1,0 +1,42 @@
+---
+
+gogs_user: git
+gogs_user_home: /home/git
+gogs_binary_url: files/gogs_v0.9.97_linux_amd64.tar
+gogs_init_script_path: gogs/scripts/init/debian/gogs
+gogs_init_symlink: /usr/local/bin/gogs
+
+
+# Values for gogs config
+
+gogs_http_port: 3000
+gogs_use_mysql: false
+gogs_db_name: gogs
+gogs_db_user: gogs
+gogs_db_password: r00tme
+
+gogs_app_name: "Gogs: Go Git Service"
+gogs_app_url: "http://{{ ansible_fqdn }}:3000/"
+gogs_ssh_port: 22
+
+# mailer
+gogs_mailer_enabled: "false"
+gogs_mailer_disable_helo: "false"
+gogs_mailer_helo_hostname:
+gogs_mailer_host:
+gogs_mailer_from:
+gogs_mailer_user:
+gogs_mailer_password:
+gogs_mailer_skip_verify: "false"
+
+# service
+gogs_register_email_confirm: "false"
+gogs_enable_notify_mail: "false"
+gogs_disable_registration: "false"
+gogs_enable_captcha: "true"
+gogs_require_signin_view: "true" 
+
+# other
+gogs_show_footer_branding: "false"
+gogs_show_footer_version: "false"
+

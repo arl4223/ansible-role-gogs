@@ -1,0 +1,81 @@
+---
+- name: Ensure git is installed
+  apt:
+    name=git
+    state=present
+
+- name: Ensure unzip is installed (Debian)
+  apt:
+    pkg=unzip
+    state=installed
+
+- name: Create gogs User
+  user:
+    name="{{ gogs_user }}"
+    comment="Gogs"
+    home="{{ gogs_user_home }}"
+    createhome=yes    
+    state=present
+    system=yes
+    shell=/bin/bash
+
+- name: Check if gogs is already installed
+  stat:
+    path="{{ gogs_init_symlink }}"
+  register: gogs_bin
+
+- name: Extract gogs binary to server
+  unarchive:
+    copy=yes
+    src="{{ gogs_binary_url }}"
+    dest="{{ gogs_user_home }}"
+    owner="{{ gogs_user }}"
+    group="{{ gogs_user }}"
+  when: gogs_bin.stat.islnk is not defined
+
+- name: Make gogs init script executable
+  file:
+    path="{{ gogs_user_home }}/{{ gogs_init_script_path }}"
+    mode=0755
+
+- name: Symlink gogs binary and startup scripts
+  file:
+    src="{{ item.src }}"
+    dest="{{ item.dest }}"
+    state=link
+  with_items:
+    - { src: "{{ gogs_user_home }}/gogs/gogs" , dest: "{{ gogs_init_symlink }}" }
+    - { src: "{{ gogs_user_home }}/{{ gogs_init_script_path }}" , dest: "/etc/init.d/gogs" }
+  notify: gogs_restart
+
+
+- name: Create gogs log folder
+  file:
+    path="{{ gogs_user_home }}/gogs/log"
+    state=directory
+    owner="{{ gogs_user }}"
+    group="{{ gogs_user }}"
+    mode=0755
+
+- name: Create gogs conf folder
+  file:
+    path="{{ gogs_user_home }}/gogs/custom/conf"
+    state=directory
+    owner="{{ gogs_user }}"
+    group="{{ gogs_user }}"
+    mode=0755
+
+- name: Configure gogs
+  template:
+    src=app.ini.j2
+    dest="{{ gogs_user_home }}/gogs/custom/conf/app.ini"
+    owner="{{ gogs_user }}"
+    group="{{ gogs_user }}"
+    mode=0644
+  notify: gogs_restart
+
+- name: Ensure Gogs is running
+  service:
+    name=gogs
+    state=started
+    enabled=yes

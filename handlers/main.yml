@@ -1,0 +1,7 @@
+---
+
+- name: gogs_restart
+  service:
+    name=gogs
+    state=restarted
+
