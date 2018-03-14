@@ -1,7 +1,7 @@
 ---
 
 - name: gogs_restart
-  service:
+  systemd:
     name=gogs
     state=restarted
-
+    daemon_reload=yes
