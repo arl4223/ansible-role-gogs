@@ -2,8 +2,8 @@
 
 gogs_user: git
 gogs_user_home: /home/git
-gogs_binary_url: files/gogs_v0.9.97_linux_amd64.tar
-gogs_init_script_path: gogs/scripts/init/debian/gogs
+gogs_binary_url: files/linux_amd64.tar.gz
+gogs_init_script_path: gogs/scripts/systemd/gogs.service
 gogs_init_symlink: /usr/local/bin/gogs
 
 
