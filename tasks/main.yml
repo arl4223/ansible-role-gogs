@@ -45,7 +45,7 @@
     state=link
   with_items:
     - { src: "{{ gogs_user_home }}/gogs/gogs" , dest: "{{ gogs_init_symlink }}" }
-    - { src: "{{ gogs_user_home }}/{{ gogs_init_script_path }}" , dest: "/etc/init.d/gogs" }
+    - { src: "{{ gogs_user_home }}/{{ gogs_init_script_path }}" , dest: "/etc/systemd/system/gogs.service" }
   notify: gogs_restart
 
 
